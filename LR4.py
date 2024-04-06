@@ -100,7 +100,10 @@ def ant_colony(distances, cities, n_ants, n_iterations):
         else:
             unchanged_count += 1
 
-        if unchanged_count > 50:
+        print("Для ітерації: ", iteration + 1)
+        print("Найкоротший маршрут:", [cities[i] for i in best_path])
+        print("Довжина найкоротшого маршруту:", best_distance)
+        if unchanged_count > 10:
             break
 
         ukraine_map([cities[i] for i in best_path], cities, ax=ax)
@@ -116,7 +119,7 @@ def ant_colony(distances, cities, n_ants, n_iterations):
     plt.ioff()
     plt.show()
 
-    return best_path, best_distance
+    return best_path, best_distance, iteration+1
 
 
 def ukraine_map(best_path, cities, ax=None):
@@ -224,9 +227,11 @@ cities = [
 n_ants = int(input("Введіть кількість мурах: "))
 n_iterations = int(input("Введіть максимальну кількість ітерацій: "))
 
-best_path, best_distance = ant_colony(
+best_path, best_distance, f_iteration = ant_colony(
     distances, cities, n_ants, n_iterations)
 
+
+print(f"Кінцевий результат для {f_iteration:d} ітерації: ")
 
 print("Найкоротший маршрут:", [cities[i] for i in best_path])
 print("Довжина найкоротшого маршруту:", best_distance)
