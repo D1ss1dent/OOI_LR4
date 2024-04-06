@@ -30,7 +30,7 @@ def select_next_city(current_city, unvisited, pheromones, distances):  # done
     return selected_city
 
 
-def calculate_probability(current_city, next_city, unvisited, pheromones, distances, alpha=1, beta=2):
+def calculate_probability(current_city, next_city, unvisited, pheromones, distances, alpha=1, beta=1):  # done
     distance = distances[current_city][next_city]
     visibility = 1 / distance
     total = sum([(1 / distances[current_city][city]) ** beta *
@@ -47,12 +47,16 @@ def update_pheromones(pheromones, ant_paths, distances):  # done
         for j in range(len(pheromones[i])):
             pheromones[i][j] *= (1 - evaporation)
 
-    for path in ant_paths:
+    ant_paths.sort(key=lambda x: calculate_distance(x, distances))
+    num_best_paths = max(len(ant_paths) // 10, 1)
+    best_paths = ant_paths[:num_best_paths]
+
+    for path in best_paths:
         for i in range(len(path) - 1):
             current_city = path[i]
             next_city = path[i + 1]
-            pheromones[current_city][next_city] += evaporation * (1 /
-                                                                  distances[current_city][next_city])
+            pheromones[current_city][next_city] += evaporation * \
+                (1 / distances[current_city][next_city])
 
 
 def calculate_distance(path, distances):  # done
@@ -96,7 +100,7 @@ def ant_colony(distances, cities, n_ants, n_iterations):
         else:
             unchanged_count += 1
 
-        if unchanged_count > 10:
+        if unchanged_count > 50:
             break
 
         ukraine_map([cities[i] for i in best_path], cities, ax=ax)
