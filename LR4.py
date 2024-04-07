@@ -112,7 +112,7 @@ def ant_colony(distances, cities, n_ants, n_iterations):
             best_distance)], loc='lower left')
         ax.get_legend().legendHandles[0].set_color('black')
 
-        ax.set_title('Карта "України: Ітерація: {}"'.format(iteration + 1))
+        ax.set_title('Карта України: Ітерація: {}'.format(iteration + 1))
         plt.draw()
         plt.pause(1)
 
