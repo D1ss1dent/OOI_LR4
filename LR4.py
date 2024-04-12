@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-def generate_path(start_city, unvisited, pheromones, distances):  # done
+def generate_path(start_city, unvisited, pheromones, distances):
     path = [start_city]
     unvisited.remove(start_city)
 
@@ -22,7 +22,7 @@ def generate_path(start_city, unvisited, pheromones, distances):  # done
     return path
 
 
-def select_next_city(current_city, unvisited, pheromones, distances):  # done
+def select_next_city(current_city, unvisited, pheromones, distances):
     probabilities = [calculate_probability(
         current_city, city, unvisited, pheromones, distances) for city in unvisited]
     selected_city = random.choices(
@@ -30,7 +30,7 @@ def select_next_city(current_city, unvisited, pheromones, distances):  # done
     return selected_city
 
 
-def calculate_probability(current_city, next_city, unvisited, pheromones, distances, alpha=1, beta=1):  # done
+def calculate_probability(current_city, next_city, unvisited, pheromones, distances, alpha=1, beta=1):
     distance = distances[current_city][next_city]
     visibility = 1 / distance
     total = sum([(1 / distances[current_city][city]) ** beta *
@@ -40,7 +40,7 @@ def calculate_probability(current_city, next_city, unvisited, pheromones, distan
     return probability
 
 
-def update_pheromones(pheromones, ant_paths, distances):  # done
+def update_pheromones(pheromones, ant_paths, distances):
     evaporation = 0.7
 
     for i in range(len(pheromones)):
@@ -59,7 +59,7 @@ def update_pheromones(pheromones, ant_paths, distances):  # done
                 (1 / distances[current_city][next_city])
 
 
-def calculate_distance(path, distances):  # done
+def calculate_distance(path, distances):
     distance = 0
     for i in range(len(path) - 1):
         current_city = path[i]
